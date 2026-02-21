@@ -37,6 +37,14 @@ Instruções para o PROJETO CatalogoProdutosAPI
 &nbsp;    dotnet add package Microsoft.EntityFrameworkCore --version 6.0.0
 
 12 - E o arquivo .env.guia, depois é somente renomear para .env e inserir as configurações de conexão, onde houver "configurar\_aqui"
+     POSTGRES_USER=configurar_aqui
+     POSTGRES_PASSWORD=configurar_aqui
+     POSTGRES_DB=configurar_aqui
+
+     PGADMIN_DEFAULT_EMAIL=pgadmin4@pgadmin.org
+     PGADMIN_DEFAULT_PASSWORD=configurar_aqui
+
+     ConnectionStrings__DefaultConnection=Host=localhost;Port=5432;Database=configurar_aqui;Username=configurar_aqui;Password=configurar_aqui
 
 
 
