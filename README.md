@@ -36,7 +36,8 @@ Instruções para o PROJETO CatalogoProdutosAPI
 
 &nbsp;    dotnet add package Microsoft.EntityFrameworkCore --version 6.0.0
 
-12 - E o arquivo .env.guia, depois é somente renomear para .env e inserir as configurações de conexão, onde houver "configurar\_aqui"
+12 - E o arquivo .env.guia, depois é somente renomear para .env e inserir as configurações de conexão, onde houver "configurar_aqui"
+
      POSTGRES_USER=configurar_aqui
      POSTGRES_PASSWORD=configurar_aqui
      POSTGRES_DB=configurar_aqui
