@@ -5,11 +5,17 @@ Desafio: Cadastro e Consulta de Produtos
 Instruções para o PROJETO CatalogoProdutosAPI
 
 1 - Instalação do Docker Desktop Installer
+
 2 - Instalação do dotnet-sdk-6.0.428-win-x64.exe
+
 3 - No VSCode instalação das extensões C#, C# Dev Kit, IntelliCode For C# Dev Kit e C# Extentions for jchannon
+
 4 - Abra o terminal do VSCode digite cd documents, depois digite mkdir projects e no final digite cd projects, diretório C:\Users\seu-usuario\documents\projects>
+
 5 - No terminal VSCode neste diretório C:\Users\seu-usuario\documents\projects> digite dotnet new webapi -n CatalogoProdutosAPI
+
 6 - Agora abra o projeto CatalogoProdutosAPI,no VSCode va em File->Open Folder, selecione o projeto ao qual feito CatalogoProdutosAPI, você verá a estrutura de arquivos e pastas do projeto CatalogoProdutosAPI
+
 7 - Agora no terminal do VSCode digite o comando dotnet run, ele compilara o projeto e criara a pasta bin:
     Visualização no terminal:
     C:\Users\seu-usuario\Documents\projects\CatalogoProdutosAPI> dotnet run
@@ -24,9 +30,13 @@ Instruções para o PROJETO CatalogoProdutosAPI
             Hosting environment: Development
       info: Microsoft.Hosting.Lifetime[0]
             Content root path: C:\Users\seu-usuario\Documents\projects\CatalogoProdutosAPI\
+            
 8 - Copie a url http://localhost:5184 e cole na barra de pesquisa do google, logo após digite na url swagger e ficara assim http://localhost:5184/swagger e enter, no final resultara em uma url assim: http://localhost:5184/swagger/index.html, você vera a página do projeto
+
 9 - Na pasta Controllers delete o arquivo desnecessário WeatherForecastController.cs
+
 10 - Agora, crie o banco de dados no postgres, observação apenas o bando de dados, não crie nenhuma tabela
+
 11 - Crie o arquivo na raiz do projeto File->New File o arquivo .env com as seguintes configurações, onde houver "configurar_aqui" é apenas modificar para a conexão do banco de dados:
 
       POSTGRES_USER=configurar_aqui
@@ -39,6 +49,7 @@ Instruções para o PROJETO CatalogoProdutosAPI
       ConnectionStrings__DefaultConnection=Host=localhost;Port=5432;Database=configurar_aqui;Username=configurar_aqui;Password=configurar_aqui
      
 12 - Depois na raiz do projeto crie o arquivo em File->New File nome do arquivo docker-compose.yml
+
 13 - Dentro deste arquivo docker-compose.yml digite essas configurações, as variáveis seguidas de $ serão reconhecidas, pois estão no arquivo .env:
 
 version: '3.4'
@@ -93,7 +104,9 @@ volumes:
      }
 
 15 - Na raiz do projeto no arquivo Program.cs, para carregar o arquivo .env, digite a linha de código DotNetEnv.Env.Load(); antes do builder, código var builder = WebApplication.CreateBuilder(args);
+
 16 - Para que a linha de código DotNetEnv.Env.Load(); seja reconhecido no projeto, no terminal do VSCode digite C:\Users\seu-usuario\Documents\projects\CatalogoProdutosAPI>dotnet add package DotNetEnv
+
 17 - Carregando o arquivo .env, digite os seguites comandos em Program.cs para que no arquivo appsettings.json seja carregado e lido:
      
      // AddDbContext
@@ -101,8 +114,7 @@ volumes:
          options.UseNpgsql(
              builder.Configuration.GetConnectionString("DefaultConnection")));
 
-18 - E para evitar algum tipo de erro no carregamento da página, problemas de autenticação ou algo parecido utilizar a aplicação de cors depois da linha de código
-builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();, assim :
+18 - E para evitar algum tipo de erro no carregamento da página, problemas de autenticação ou algo parecido utilizar a aplicação de cors depois da linha de código builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();, assim :
 
     builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
 
@@ -125,12 +137,19 @@ Em seguida digite a linha de código logo apos a linha de código app.MapControl
 Isso evita, algum tipo de erro na página
 
 19 - Agora, feito as configurações necessárias, inicie o Docker Desktop antes e no terminal do VSCode pare os serviços do projeto digite Ctrl+C, agora digite o seguinte comando C:\Users\seu-usuario\Documents\projects2\CatalogoProdutosAPI>docker-compose up -d, este comando sobe o arquivo docker-compose.yml, criando os conteiners e grava as variáveis do arquivo .env
+
 20 - Para a integração com o banco de dados digite o comando no terminal do VSCode C:\Users\seu-usuario\Documents\projects\CatalogoProdutosAPI>dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL --version 6.0.29
+
 21 - Para instalar o dotnet-ef digite o seguinte comando no terminal do VSCode C:\Users\seu-usuario\Documents\projects\CatalogoProdutosAPI>dotnet tool install --global dotnet-ef --version 6.*
+
 22 - Para utilizar migração digite o seguinte comando no terminal do VSCode C:\Users\seu-usuario\Documents\projects\CatalogoProdutosAPI>dotnet add package Microsoft.EntityFrameworkCore.Design --version 6.0.29
+
 23 - Para a instalação do EntityFramework, digite o seguinte comando no terminal do VSCode C:\Users\seu-usuario\Documents\projects\CatalogoProdutosAPI>dotnet add package Microsoft.EntityFrameworkCore --version 6.0.29
+
 24 - Agora para dar build e inicializar a migração, digite o seguinte comando no terminal do VSCode C:\Users\seu-usuario\Documents\projects\CatalogoProdutosAPI>dotnet ef migrations add InitialMigration, em seguida ele cria a pasta Migations na estrutura do projeto
+
 25 - E para criar a tabela Produtos, digite a seguinte linha de comando no terminal do VSCode C:\Users\seu-usuario\Documents\projects\CatalogoProdutosAPI>dotnet ef database update
+
 26 - Configurações concluída, digite o comando no terminal do VSCode C:\Users\seu-usuario\Documents\projects\CatalogoProdutosAPI>dotnet run rode o projeto para testes
 
 =====================================================================================
@@ -138,10 +157,15 @@ Isso evita, algum tipo de erro na página
 Instruções para o PROJETO CatalogoProdutosAPI.Tests
 
 1 - No terminal do VSCode digite cd Documents, depois cd projects Diretório final C:\Users\seu-usuario\Documents\projects>
+
 2 - No terminal do VSCode digite o seguinte comando para criar o projeto de testes C:\Users\seu-usuario\Documents\projects>dotnet new xunit -n CatalogoProdutosAPI.Tests
+
 3 - Projeto feito, agora é abrir o mesmo em File->Open Folder selecione CatalogoProdutosAPI.Tests, verá toda a estrutura deste projeto
+
 4 - No terminal do VSCode digite C:\Users\seu-usuario\Documents\projects\CatalogoProdutosAPI.Tests> cd ..
+
 5 - No terminal do VSCode digite o seguinte comando C:\Users\seu-usuario\Documents\projects>dotnet add CatalogoProdutosAPI.Tests reference CatalogoProdutosAPI
+
 6 - No arquivo CatalogoProdutosAPI.Tests.csproj do projeto CatalogoProdutosAPI.Tests verá uma linha de código adicional:
 
     <ItemGroup>
@@ -149,12 +173,19 @@ Instruções para o PROJETO CatalogoProdutosAPI.Tests
     </ItemGroup>
 
 7 - No terminal do VSCode digite o seguinte comando C:\Users\seu-usuario\Documents\projects>dotnet add CatalogoProdutosAPI.Tests package Moq
+
 8 - No terminal do VSCode digite o seguinte comando C:\Users\seu-usuario\Documents\projects>dotnet add CatalogoProdutosAPI.Tests package Microsoft.AspNetCore.Mvc.Testing
+
 9 - No terminal do VSCode digite C:\Users\seu-usuario\Documents\projects> cd CatalogoProdutosAPI.Tests
+
 10 - No terminal do VSCode digite o seguinte comando C:\Users\seu-usuario\Documents\projects\CatalogoProdutosAPI.Tests> dotnet add package Microsoft.EntityFrameworkCore.InMemory --version 7.0.0
+
 11 - No arquivo CatalogoProdutosAPI.Tests.csproj do projeto CatalogoProdutosAPI.Tests verá uma linha de código adicional:
+
      <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.0" />
+     
 12 - Agora é apenas testar o projeto CatalogoProdutosAPI.Tests, no terminal do VSCode digite C:\Users\seu-usuario\Documents\projects\CatalogoProdutosAPI.Tests> dotnet test
+
 13 - Validando assim, alguns métodos do ProdutoRepository.cs do projeto principal CatalogoProdutosAPI     
 
 ===============================================================================================================
