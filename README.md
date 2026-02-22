@@ -17,6 +17,7 @@ Instruções para o PROJETO CatalogoProdutosAPI
 6 - Agora abra o projeto CatalogoProdutosAPI,no VSCode va em File->Open Folder, selecione o projeto ao qual feito CatalogoProdutosAPI, você verá a estrutura de arquivos e pastas do projeto CatalogoProdutosAPI
 
 7 - Agora no terminal do VSCode digite o comando dotnet run, ele compilara o projeto e criara a pasta bin:
+
     Visualização no terminal:
     C:\Users\seu-usuario\Documents\projects\CatalogoProdutosAPI> dotnet run
       Compilando...
