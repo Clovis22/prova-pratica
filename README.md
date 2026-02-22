@@ -1,107 +1,165 @@
 # prova-pratica
 
-Prova pratica gerenciamento de catalogo de produtos
-
-
+Desafio: Cadastro e Consulta de Produtos
 
 Instruções para o PROJETO CatalogoProdutosAPI
 
-
-
 1 - Instalação do Docker Desktop Installer
+2 - Instalação do dotnet-sdk-6.0.428-win-x64.exe
+3 - No VSCode instalação das extensões C#, C# Dev Kit, IntelliCode For C# Dev Kit e C# Extentions for jchannon
+4 - Abra o terminal do VSCode digite cd documents, depois digite mkdir projects e no final digite cd projects, diretório C:\Users\seu-usuario\documents\projects>
+5 - No terminal VSCode neste diretório C:\Users\seu-usuario\documents\projects> digite dotnet new webapi -n CatalogoProdutosAPI
+6 - Agora abra o projeto CatalogoProdutosAPI,no VSCode va em File->Open Folder, selecione o projeto ao qual feito CatalogoProdutosAPI, você verá a estrutura de arquivos e pastas do projeto CatalogoProdutosAPI
+7 - Agora no terminal do VSCode digite o comando dotnet run, ele compilara o projeto e criara a pasta bin:
+    Visualização no terminal:
+    C:\Users\seu-usuario\Documents\projects\CatalogoProdutosAPI> dotnet run
+      Compilando...
+      info: Microsoft.Hosting.Lifetime[14]
+            Now listening on: https://localhost:7050
+      info: Microsoft.Hosting.Lifetime[14]
+            Now listening on: http://localhost:5184
+      info: Microsoft.Hosting.Lifetime[0]
+            Application started. Press Ctrl+C to shut down.
+      info: Microsoft.Hosting.Lifetime[0]
+            Hosting environment: Development
+      info: Microsoft.Hosting.Lifetime[0]
+            Content root path: C:\Users\seu-usuario\Documents\projects\CatalogoProdutosAPI\
+8 - Copie a url http://localhost:5184 e cole na barra de pesquisa do google, logo após digite na url swagger e ficara assim http://localhost:5184/swagger e enter, no final resultara em uma url assim: http://localhost:5184/swagger/index.html, você vera a página do projeto
+9 - Na pasta Controllers delete o arquivo desnecessário WeatherForecastController.cs
+10 - Agora, crie o banco de dados no postgres, observação apenas o bando de dados, não crie nenhuma tabela
+11 - Crie o arquivo na raiz do projeto File->New File o arquivo .env com as seguintes configurações, onde houver "configurar_aqui" é apenas modificar para a conexão do banco de dados:
 
-2 - Instalação do dotnet-sdk-6.0.428-win-x64
+      POSTGRES_USER=configurar_aqui
+      POSTGRES_PASSWORD=configurar_aqui
+      POSTGRES_DB=configurar_aqui
 
-3 - no cmd na raiz do seu usuario instale dotnet tool install --global dotnet-ef --version 6.\*
+      PGADMIN_DEFAULT_EMAIL=pgadmin4@pgadmin.org
+      PGADMIN_DEFAULT_PASSWORD=configurar_aqui
 
-4 - no VSCode instalei as extensões C#, C# Dev Kit, IntelliCode For C# Dev Kit e C# Extentions autor jchannon
+      ConnectionStrings__DefaultConnection=Host=localhost;Port=5432;Database=configurar_aqui;Username=configurar_aqui;Password=configurar_aqui
+     
+12 - Depois na raiz do projeto crie o arquivo em File->New File nome do arquivo docker-compose.yml
+13 - Dentro deste arquivo docker-compose.yml digite essas configurações, as variáveis seguidas de $ serão reconhecidas, pois estão no arquivo .env:
 
-5 - comando dotnet run para roda a aplicação no browser, http://localhost:5289/swagger/index.html
+version: '3.4'
 
-6 - Como subir o arquivo docker-compose.yml, comando no terminal do vscode docker-compose up -d, isso ler o docker-compose cria os conteiners e grava variaveis do .env
+services:
 
-7 - Utilizando docker-compose down para fazer parar os conteiners, terminal vscode
+    postgresql_database:
+        image: postgres:latest
+        environment:
+            - POSTGRES_USER=${POSTGRES_USER}
+            - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+            - POSTGRES_DB=${POSTGRES_DB}
+        ports:
+            - "5432:5432"
+        restart: always
+        volumes: 
+            - database-data:/var/lib/postgresql/data/
 
-8 - Integração com o banco, comando dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL --version 5.0.2, terminal vscode
+    pgadmin:
+        image: dpage/pgadmin4
+        environment:
+            - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+            - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+        ports:
+            - "5050:80"
+        restart: always
+        volumes:
+            - pgadmin:/root/.pgadmin
 
-9 - Permitir usar migração, comando dotnet add package Microsoft.EntityFrameworkCore.Design --version 6.0.428, terminal vscode
+volumes:
+    database-data:
+    pgadmin:
 
-10 - Instalar o EntityFramework,comando dotnet add package Microsoft.EntityFrameworkCore --version 6.0.0, terminal vscode
+14 - Agora no arquivo appsettings.json, digite:
 
-11 - Forma de corrigir versão, se aparecer erro:
+     "ConnectionStrings": {
+    	"DefaultConnection": ""
+     },
 
-&nbsp;    dotnet add package Microsoft.EntityFrameworkCore.Design --version 6.0.0
+   - A estrutura ficara assim no arquivo:
+     {
+  	"ConnectionStrings": {
+    	   "DefaultConnection": ""
+        },
+        "Logging": {
+          "LogLevel": {
+             "Default": "Information",
+             "Microsoft.AspNetCore": "Warning"
+          }
+        },
+        "AllowedHosts": "*"
+     }
 
-&nbsp;    dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL --version 6.0.0
+15 - Na raiz do projeto no arquivo Program.cs, para carregar o arquivo .env, digite a linha de código DotNetEnv.Env.Load(); antes do builder, código var builder = WebApplication.CreateBuilder(args);
+16 - Para que a linha de código DotNetEnv.Env.Load(); seja reconhecido no projeto, no terminal do VSCode digite C:\Users\seu-usuario\Documents\projects\CatalogoProdutosAPI>dotnet add package DotNetEnv
+17 - Carregando o arquivo .env, digite os seguites comandos em Program.cs para que no arquivo appsettings.json seja carregado e lido:
+     
+     // AddDbContext
+     builder.Services.AddDbContext<DataContext>(options =>
+         options.UseNpgsql(
+             builder.Configuration.GetConnectionString("DefaultConnection")));
 
-&nbsp;    dotnet add package Microsoft.EntityFrameworkCore --version 6.0.0
+18 - E para evitar algum tipo de erro no carregamento da página, problemas de autenticação ou algo parecido utilizar a aplicação de cors depois da linha de código
+builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();, assim :
 
-12 - E o arquivo .env.guia, depois é somente renomear para .env e inserir as configurações de conexão, onde houver "configurar_aqui"
+    builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
 
-     POSTGRES_USER=configurar_aqui
-     POSTGRES_PASSWORD=configurar_aqui
-     POSTGRES_DB=configurar_aqui
+    builder.Services.AddCors(options =>
+    {
+        options.AddPolicy("AllowAll", policy =>
+        {
+            policy.AllowAnyOrigin()
+                  .AllowAnyMethod()
+                  .AllowAnyHeader();
+        });
+    });
 
-     PGADMIN_DEFAULT_EMAIL=pgadmin4@pgadmin.org
-     PGADMIN_DEFAULT_PASSWORD=configurar_aqui
+Em seguida digite a linha de código logo apos a linha de código app.MapControllers();, assim:
 
-     ConnectionStrings__DefaultConnection=Host=localhost;Port=5432;Database=configurar_aqui;Username=configurar_aqui;Password=configurar_aqui
+    app.MapControllers();
 
+    app.UseCors("AllowAll");
 
+Isso evita, algum tipo de erro na página
 
-===============================================================================================================
+19 - Agora, feito as configurações necessárias, inicie o Docker Desktop antes e no terminal do VSCode pare os serviços do projeto digite Ctrl+C, agora digite o seguinte comando C:\Users\seu-usuario\Documents\projects2\CatalogoProdutosAPI>docker-compose up -d, este comando sobe o arquivo docker-compose.yml, criando os conteiners e grava as variáveis do arquivo .env
+20 - Para a integração com o banco de dados digite o comando no terminal do VSCode C:\Users\seu-usuario\Documents\projects\CatalogoProdutosAPI>dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL --version 6.0.29
+21 - Para instalar o dotnet-ef digite o seguinte comando no terminal do VSCode C:\Users\seu-usuario\Documents\projects\CatalogoProdutosAPI>dotnet tool install --global dotnet-ef --version 6.*
+22 - Para utilizar migração digite o seguinte comando no terminal do VSCode C:\Users\seu-usuario\Documents\projects\CatalogoProdutosAPI>dotnet add package Microsoft.EntityFrameworkCore.Design --version 6.0.29
+23 - Para a instalação do EntityFramework, digite o seguinte comando no terminal do VSCode C:\Users\seu-usuario\Documents\projects\CatalogoProdutosAPI>dotnet add package Microsoft.EntityFrameworkCore --version 6.0.29
+24 - Agora para dar build e inicializar a migração, digite o seguinte comando no terminal do VSCode C:\Users\seu-usuario\Documents\projects\CatalogoProdutosAPI>dotnet ef migrations add InitialMigration, em seguida ele cria a pasta Migations na estrutura do projeto
+25 - E para criar a tabela Produtos, digite a seguinte linha de comando no terminal do VSCode C:\Users\seu-usuario\Documents\projects\CatalogoProdutosAPI>dotnet ef database update
+26 - Configurações concluída, digite o comando no terminal do VSCode C:\Users\seu-usuario\Documents\projects\CatalogoProdutosAPI>dotnet run rode o projeto para testes
 
-
+=====================================================================================
 
 Instruções para o PROJETO CatalogoProdutosAPI.Tests
 
+1 - No terminal do VSCode digite cd Documents, depois cd projects Diretório final C:\Users\seu-usuario\Documents\projects>
+2 - No terminal do VSCode digite o seguinte comando para criar o projeto de testes C:\Users\seu-usuario\Documents\projects>dotnet new xunit -n CatalogoProdutosAPI.Tests
+3 - Projeto feito, agora é abrir o mesmo em File->Open Folder selecione CatalogoProdutosAPI.Tests, verá toda a estrutura deste projeto
+4 - No terminal do VSCode digite C:\Users\seu-usuario\Documents\projects\CatalogoProdutosAPI.Tests> cd ..
+5 - No terminal do VSCode digite o seguinte comando C:\Users\seu-usuario\Documents\projects>dotnet add CatalogoProdutosAPI.Tests reference CatalogoProdutosAPI
+6 - No arquivo CatalogoProdutosAPI.Tests.csproj do projeto CatalogoProdutosAPI.Tests verá uma linha de código adicional:
 
+    <ItemGroup>
+       <ProjectReference Include="..\CatalogoProdutosAPI\CatalogoProdutosAPI.csproj" />
+    </ItemGroup>
 
-Observação: Estrutura C:\\Users\\clovis\\Documents\\projects
-
-dentro da pasta projects tem o projeto principal CatalogoProdutosAPI
-
-
-
-1 - Para criar o projeto de testes, abra o prompt dentro da pasta projects com o comando dotnet new xunit -n CatalogoProdutosAPI.Tests
-
-&nbsp;   - Ai terá os dois projetos a API CatalogoProdutosAPI e Testes CatalogoProdutosAPI.Tests
-
-2 - Rode o comando dotnet add CatalogoProdutosAPI.Tests reference CatalogoProdutosAPI dentro da pasta projects
-
-3 - Rode mais esses comandos dentro de projects:
-
-&nbsp;   - dotnet add CatalogoProdutosAPI.Tests package Moq
-
-&nbsp;   - dotnet add CatalogoProdutosAPI.Tests package Microsoft.AspNetCore.Mvc.Testing
-
-&nbsp;   - dotnet add CatalogoProdutosAPI.Tests package Microsoft.EntityFrameworkCore.InMemory
-
-4 - Entre na pasta do projeto de testes:
-
-&nbsp;   cd CatalogoProdutosAPI.Testes
-
-&nbsp;   abra o prompt e rode o comando dotnet add reference ../CatalogoProdutosAPI/CatalogoProdutosAPI.csproj
-
-5 - No arquivo CatalogoProdutosAPI.Tests.csproj terá <ProjectReference Include="..\\CatalogoProdutosAPI\\CatalogoProdutosAPI.csproj" />
-
-6 - Comando para rodar o teste dotnet test no terminal vscode do projeto CatalogoProdutosAPI.Tests
-
-7 - Agora para instalar outro pacote com versão especifica entre na pasta CatalogoProdutosAPI.Tests abra o prompt e rode o comando dotnet add package Microsoft.EntityFrameworkCore.InMemory --version 7.0.0, rodei o teste com essa verão
-
-8 - Aparecera a linha de código <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.0" /> no arquivo CatalogoProdutosAPI.Tests.csproj
-
-9 - Rode o comando dotnet test no terminal vscode novamente para validar o teste
-
-
+7 - No terminal do VSCode digite o seguinte comando C:\Users\seu-usuario\Documents\projects>dotnet add CatalogoProdutosAPI.Tests package Moq
+8 - No terminal do VSCode digite o seguinte comando C:\Users\seu-usuario\Documents\projects>dotnet add CatalogoProdutosAPI.Tests package Microsoft.AspNetCore.Mvc.Testing
+9 - No terminal do VSCode digite C:\Users\seu-usuario\Documents\projects> cd CatalogoProdutosAPI.Tests
+10 - No terminal do VSCode digite o seguinte comando C:\Users\seu-usuario\Documents\projects\CatalogoProdutosAPI.Tests> dotnet add package Microsoft.EntityFrameworkCore.InMemory --version 7.0.0
+11 - No arquivo CatalogoProdutosAPI.Tests.csproj do projeto CatalogoProdutosAPI.Tests verá uma linha de código adicional:
+     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.0" />
+12 - Agora é apenas testar o projeto CatalogoProdutosAPI.Tests, no terminal do VSCode digite C:\Users\seu-usuario\Documents\projects\CatalogoProdutosAPI.Tests> dotnet test
+13 - Validando assim, alguns métodos do ProdutoRepository.cs do projeto principal CatalogoProdutosAPI     
 
 ===============================================================================================================
 
-
-
 DOCUMENTAÇÃO RESUMIDA – ESTRUTURA DO PROJETO CatalogoProdutosAPI
-
-
 
 &nbsp; ----------------
 
@@ -109,25 +167,17 @@ DOCUMENTAÇÃO RESUMIDA – ESTRUTURA DO PROJETO CatalogoProdutosAPI
 
 &nbsp; ----------------
 
-
-
 O projeto CatalogoProdutosAPI é uma API REST desenvolvida em ASP.NET
 
 Core para gerenciamento de produtos, utilizando Entity Framework Core
 
 com padrão Repository.
 
-
-
 Estrutura principal:
-
-
 
 CatalogoProdutosAPI │ ├── Controllers ├── Data ├── Dtos ├── Models ├──
 
 Repositories
-
-
 
 &nbsp; -----------
 
@@ -135,11 +185,7 @@ Repositories
 
 &nbsp; -----------
 
-
-
 Produto.cs
-
-
 
 Representa a entidade principal do sistema.
 
@@ -153,11 +199,7 @@ Ativo/Inativo - ImagemUrl → Caminho da imagem - DateCreated → Data de
 
 criação
 
-
-
 Função: Representa a tabela Produtos no banco de dados.
-
-
 
 &nbsp; -----------------------------
 
@@ -165,33 +207,19 @@ Função: Representa a tabela Produtos no banco de dados.
 
 &nbsp; -----------------------------
 
-
-
 IDataContext.cs
-
-
 
 Define: - DbSet Produtos - Task SaveChangesAsync()
 
-
-
 Permite desacoplamento e facilita testes.
-
-
 
 DataContext.cs
 
-
-
 Herda de DbContext e implementa IDataContext.
-
-
 
 Responsável por: - Configuração do banco - Mapeamento das entidades -
 
 Persistência de dados
-
-
 
 &nbsp; ---------------------------------
 
@@ -199,27 +227,17 @@ Persistência de dados
 
 &nbsp; ---------------------------------
 
-
-
 CriarProdutoDto.cs Utilizado no POST (criação). Contém: - Nome -
 
 Categoria - Preço - Status - Imagem (IFormFile)
 
-
-
 Permite upload de imagem via multipart/form-data.
-
-
 
 EditarProdutoDto.cs Utilizado no PUT (edição). Contém: - Nome -
 
 Categoria - Preço - Status - ImagemUrl
 
-
-
 Evita expor diretamente o Model.
-
-
 
 &nbsp; -----------------
 
@@ -227,21 +245,13 @@ Evita expor diretamente o Model.
 
 &nbsp; -----------------
 
-
-
 IProdutoRepository.cs
-
-
 
 Define os métodos: - Cadastrar - Get - GetAll - GetFiltrado - Editar -
 
 Deletar - SaveChangesAsync
 
-
-
 ProdutoRepository.cs
-
-
 
 Responsável por: - Inserção de produtos - Consulta por ID - Listagem
 
@@ -249,11 +259,7 @@ geral - Filtro avançado por: \* Categoria \* Preço mínimo \* Preço máximo \
 
 Status \* Presença de imagem - Atualização - Exclusão
 
-
-
 Centraliza toda lógica de acesso ao banco.
-
-
 
 &nbsp; ----------------
 
@@ -261,19 +267,11 @@ Centraliza toda lógica de acesso ao banco.
 
 &nbsp; ----------------
 
-
-
 ProdutoController.cs
-
-
 
 Rota base: api/produto
 
-
-
 Endpoints disponíveis:
-
-
 
 POST /api/produto → Criar produto GET /api/produto → Listar todos GET
 
@@ -283,13 +281,9 @@ filtros PUT /api/produto/{id} → Editar DELETE /api/produto/{id} →
 
 Deletar
 
-
-
 Upload de imagem: - Recebe IFormFile - Salva arquivo na pasta /Uploads -
 
 Gera nome único com Guid - Armazena o caminho no banco
-
-
 
 &nbsp; -----------------------
 
@@ -297,11 +291,7 @@ Gera nome único com Guid - Armazena o caminho no banco
 
 &nbsp; -----------------------
 
-
-
 Cliente → Controller → Repository → DataContext → Banco de Dados
-
-
 
 1\.  Cliente faz requisição HTTP
 
@@ -313,15 +303,11 @@ Cliente → Controller → Repository → DataContext → Banco de Dados
 
 5\.  Resposta retorna ao cliente
 
-
-
 &nbsp; -----------------------
 
 &nbsp; 8. PADRÕES UTILIZADOS
 
 &nbsp; -----------------------
-
-
 
 \-   API REST
 
@@ -335,15 +321,11 @@ Cliente → Controller → Repository → DataContext → Banco de Dados
 
 \-   Upload de arquivos
 
-
-
 &nbsp; -----------------
 
 &nbsp; 9. RESUMO FINAL
 
 &nbsp; -----------------
-
-
 
 O projeto é uma API REST organizada e escalável que: - Gerencia
 
@@ -351,15 +333,9 @@ produtos - Permite upload de imagens - Suporta filtros dinâmicos -
 
 Utiliza boas práticas de arquitetura
 
-
-
 =========================================================================================================================
 
-
-
 DOCUMENTAÇÃO RESUMIDA – PROJETO CatalogoProdutosAPI.Tests
-
-
 
 &nbsp; ----------------
 
@@ -367,19 +343,13 @@ DOCUMENTAÇÃO RESUMIDA – PROJETO CatalogoProdutosAPI.Tests
 
 &nbsp; ----------------
 
-
-
 O projeto CatalogoProdutosAPI.Tests é responsável por testar
 
 automaticamente as funcionalidades da camada de repositório da API.
 
-
-
 Tecnologias utilizadas: - xUnit (framework de testes) - Entity Framework
 
 Core InMemory - Testes assíncronos (async/await)
-
-
 
 &nbsp; -------------------------
 
@@ -387,11 +357,7 @@ Core InMemory - Testes assíncronos (async/await)
 
 &nbsp; -------------------------
 
-
-
 CatalogoProdutosAPI.Tests │ └── ProdutoRepositoryTests.cs
-
-
 
 &nbsp; ------------------------------
 
@@ -399,15 +365,9 @@ CatalogoProdutosAPI.Tests │ └── ProdutoRepositoryTests.cs
 
 &nbsp; ------------------------------
 
-
-
 Classe principal: public class ProdutoRepositoryTests
 
-
-
 Responsável por testar a classe ProdutoRepository.
-
-
 
 &nbsp; -------------------------------------
 
@@ -415,15 +375,9 @@ Responsável por testar a classe ProdutoRepository.
 
 &nbsp; -------------------------------------
 
-
-
 Método auxiliar:
 
-
-
 private DataContext CriarContextoInMemory()
-
-
 
 Função: - Configura DbContext com UseInMemoryDatabase(“BancoTeste”) -
 
@@ -431,11 +385,7 @@ Cria um banco temporário apenas em memória - Retorna uma instância de
 
 DataContext
 
-
-
 Isso permite que os testes rodem sem depender de um banco real.
-
-
 
 &nbsp; -----------------------
 
@@ -443,19 +393,11 @@ Isso permite que os testes rodem sem depender de um banco real.
 
 &nbsp; -----------------------
 
-
-
 Teste: Deve\_Cadastrar\_Produto()
-
-
 
 Estrutura utilizada: AAA (Arrange, Act, Assert)
 
-
-
 1\)  Arrange (Preparação)
-
-
 
 \-   Cria o contexto em memória
 
@@ -463,27 +405,17 @@ Estrutura utilizada: AAA (Arrange, Act, Assert)
 
 \-   Cria um objeto Produto
 
-
-
 2\)  Act (Execução)
-
-
 
 \-   Executa o método Cadastrar
 
 \-   Busca todos os produtos
 
-
-
 3\)  Assert (Validação)
-
-
 
 \-   Verifica se existe exatamente 1 produto cadastrado usando
 
 &nbsp;   Assert.Single(produtos)
-
-
 
 &nbsp; -------------------
 
@@ -491,21 +423,15 @@ Estrutura utilizada: AAA (Arrange, Act, Assert)
 
 &nbsp; -------------------
 
-
-
 Criar contexto em memória ↓ Criar repositório ↓ Cadastrar produto ↓
 
 Buscar produtos ↓ Validar resultado
-
-
 
 &nbsp; ----------------------------------
 
 &nbsp; 7. OBJETIVO DO PROJETO DE TESTES
 
 &nbsp; ----------------------------------
-
-
 
 \-   Garantir que a camada Repository funciona corretamente
 
@@ -517,15 +443,11 @@ Buscar produtos ↓ Validar resultado
 
 \-   Permitir integração contínua (CI/CD)
 
-
-
 &nbsp; ---------------
 
 &nbsp; 8. BENEFÍCIOS
 
 &nbsp; ---------------
-
-
 
 \-   Testes rápidos
 
@@ -537,15 +459,11 @@ Buscar produtos ↓ Validar resultado
 
 \-   Melhor qualidade da aplicação
 
-
-
 &nbsp; --------------
 
 &nbsp; RESUMO FINAL
 
 &nbsp; --------------
-
-
 
 O projeto CatalogoProdutosAPI.Tests valida o funcionamento da camada de
 
@@ -554,4 +472,3 @@ acesso a dados da API utilizando testes automatizados com xUnit e banco
 de dados em memória, garantindo maior confiabilidade e qualidade ao
 
 sistema.
-
