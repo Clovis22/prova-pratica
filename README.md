@@ -80,6 +80,7 @@ services:
         volumes:
             - pgadmin:/root/.pgadmin
 
+
 volumes:
     database-data:
     pgadmin:
@@ -91,6 +92,7 @@ volumes:
      },
 
    - A estrutura ficara assim no arquivo:
+     
      {
   	"ConnectionStrings": {
     	   "DefaultConnection": ""
