@@ -79,7 +79,6 @@ services:
         restart: always
         volumes:
             - pgadmin:/root/.pgadmin
-
 volumes:
     database-data:
     pgadmin:
@@ -92,18 +91,18 @@ volumes:
 
    - A estrutura ficara assim no arquivo:
      
-     {
-  	    "ConnectionStrings": {
-    	   "DefaultConnection": ""
-        },
-        "Logging": {
-          "LogLevel": {
-             "Default": "Information",
-             "Microsoft.AspNetCore": "Warning"
-          }
-        },
-        "AllowedHosts": "*"
-     }
+{
+  "ConnectionStrings": {
+    "DefaultConnection": ""
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*"
+}
 
 15 - Na raiz do projeto no arquivo Program.cs, para carregar o arquivo .env, digite a linha de código DotNetEnv.Env.Load(); antes do builder, código var builder = WebApplication.CreateBuilder(args);
 
