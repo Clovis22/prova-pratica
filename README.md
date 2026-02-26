@@ -148,6 +148,7 @@ services:
    - A estrutura ficara assim no arquivo:
      
 {
+
   "ConnectionStrings": {
       "DefaultConnection": ""
   },
@@ -158,6 +159,7 @@ services:
       }
   },
   "AllowedHosts": "*"
+  
 }
 
 15 - Na raiz do projeto no arquivo Program.cs, para carregar o arquivo .env, digite a linha de código DotNetEnv.Env.Load(); antes do builder, código var builder = WebApplication.CreateBuilder(args);
@@ -212,6 +214,36 @@ Isso evita, algum tipo de erro na página
 =====================================================================================
 
 Instruções para o PROJETO CatalogoProdutosAPI.Tests
+
+OBESERVAÇÕES: Alguns passos não serão necessários, pois o projeto está feito:
+
+              A etapa 1 não é necessária, pois é apenas abrir o projeto no VSCode
+
+              A etapa 2 não é necessária, pois o projeto já está feito
+
+              A Etapa 3 é necessária
+
+              A etapa 4 não é necessária, pois já foi feita a referenciação no projeto principal 
+
+              A etapa 5 não é necessária, pois a referência já foi aplicada e já está contido no projeto
+
+              A etapa 6 não é necessária, pois o código já está contido no projeto
+
+              A etapa 7 não é necessária, pois o pacote já está contido no projeto
+
+              A etapa 8 não é necessária, pois o pacote já está contido no projeto
+
+              A etapa 9 não é necessária, pois é preciso ficar no projeto
+
+              A etapa 10 não é necessária, pois o pacote já está contido no projeto
+
+              A etapa 11 é apenas a confirmação de que o pacote ja está no projeto
+
+              A etapa 12 é necessária
+
+              A etapa 13 é apenas a confirmação da validação do projeto em relação a API principal
+
+              Os pacotes estão neste arquivo CatalogoProdutosAPI.Tests.csproj              
 
 1 - No terminal do VSCode digite cd Documents, depois cd projects Diretório final C:\Users\seu-usuario\Documents\projects>
 
