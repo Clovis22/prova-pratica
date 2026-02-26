@@ -4,32 +4,59 @@ Desafio: Cadastro e Consulta de Produtos
 
 Instruções para o PROJETO CatalogoProdutosAPI
 
-OBSERVAÇÃO: Alguns passos não serão necessários, pois o projeto está feito
+OBSERVAÇÃO: Alguns passos não serão necessários, pois o projeto está feito:
+
             Inicialize o Docker Desktop, se já tem instalado a etapa 1 não é necessário
+            
             Se já tem instalado dotnet-sdk-6.0.428-win-x64.exe .NET 6, então a etapa 2 não é necessário
+            
             Na etapa 3, as extensões são necessárias se o mesmo não estão instalados no VSCode
-            Crie a pasta projects em Documents e dentro de projects cole o projeto CatalogoProdutosAPI e CatalogoProdutosAPI.Tests é                   necessário desta forma para que funcione, a etapa 4 é necessária
+            
+            Crie a pasta projects em Documents e dentro de projects cole o projeto CatalogoProdutosAPI e CatalogoProdutosAPI.Tests é                   
+            necessário desta forma para que funcione, a etapa 4 é necessária
+            
             A etapa 5 não é necessária, pois o projeto está feito
+            
             A etapa 6 é necessária
+            
             A etapa 7 é necessária
+            
             A etapa 8 é necessária
+            
             A etapa 9 não é necessária, pois o arquivo já foi removido
+            
             A etapa 10 é necessária
+            
             A etapa 11 é necessária
+            
             A etapa 12 não é necessária, pois já tem no projeto
+            
             A etapa 13 não é necessária, pois as configurações já estão no arquivo do projeto
+            
             A etapa 14 não é necessária, pois as configurações ja estão no arquivo do projeto
+            
             A etapa 15 não é necessária, pois o código já está contido no projeto
+            
             A etapa 16 é necessária
+            
             A etapa 17 não é necessária, pois as configurações já está contido no projeto
+            
             A etapa 18 não é necessária, pois as configurações já está contido no projeto
+            
             A etapa 19 é necessária
+            
             A etapa 20 é necessária
+            
             A etapa 21 é necessária
+            
             A etapa 22 é necessária
+            
             A etapa 23 é necessária
+            
             A etapa 24 não é necessária, pois a pasta Migrations já está contido no projeto
+            
             A etapa 25 é necessária
+            
             A etapa 26 é necessária
 
 1 - Instalação do Docker Desktop Installer e inicialize o mesmo
