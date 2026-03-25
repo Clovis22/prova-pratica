@@ -5,9 +5,12 @@ Desafio: Cadastro e Consulta de Produtos
 Instruções para o PROJETO CatalogoProdutosAPI
 
 1 - Rode a instrução "docker compose up --build" no terminal do VSCode, no DockerDesktop estará assim:
-    postgres
-    dpage/pgadmin4
-    catalogoprodutosapi-api
+
+\-   postgres
+
+\-   dpage/pgadmin4
+
+\-   catalogoprodutosapi-api
 
 2 - No browser digite a seguinte Url http://localhost:5000/swagger. A comunicação é tudo feito pelo docker.
 
