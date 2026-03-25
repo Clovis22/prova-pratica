@@ -28,13 +28,13 @@ OBSERVAÇÃO: Se no DockerDesktop estiver apenas as imagens: postgres, dpage/pga
 
 \-   API apenas inicia quando o banco estiver feito
 
-=====================================================================================
+============================================================================
 
 Instruções para o PROJETO CatalogoProdutosAPI.Tests
 
 1 - Abra o PROJETO CatalogoProdutosAPI.Tests no VSCode e no terminal rode a instrução "dotnet test", para validar os testes
 
-=====================================================================================
+============================================================================
 
 DOCUMENTAÇÃO RESUMIDA – ESTRUTURA DO PROJETO CatalogoProdutosAPI
 
