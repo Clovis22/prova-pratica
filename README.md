@@ -13,12 +13,12 @@ Instruções para o PROJETO CatalogoProdutosAPI
 
 OBSERVAÇÃO: Se no DockerDesktop estiver apenas as imagens: postgres, dpage/pgadmin4. Apenas rode novamente a instrução "docker compose up --build" no terminal do VSCode, pois pode ocorrer timeout, ou seja, a rede pode está lenta ou download travando das imagens.
 
-API dockerizado
-PostgreSQL dockerizado
-pgAdimin dockerizado
-Migrations automáticas
-Banco feito automáticamente
-API apenas inicia quando o banco estiver feito
+\- API dockerizado
+\- PostgreSQL dockerizado
+\- pgAdimin dockerizado
+\- Migrations automáticas
+\- Banco feito automáticamente
+\- API apenas inicia quando o banco estiver feito
 
 =====================================================================================
 
