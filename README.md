@@ -13,12 +13,13 @@ Instruções para o PROJETO CatalogoProdutosAPI
 
 OBSERVAÇÃO: Se no DockerDesktop estiver apenas as imagens: postgres, dpage/pgadmin4. Apenas rode novamente a instrução "docker compose up --build" no terminal do VSCode, pois pode ocorrer timeout, ou seja, a rede pode está lenta ou download travando das imagens.
 
-API dockeriado
+API dockerizado
 PostgreSQL dockerizado
-pgAdmin dockerizado
+pgAdimin dockerizado
 Migrations automáticas
-Banco feito automaticamente
-API só inicia quando o banco estiver pronto
+Banco feito automáticamente
+API apenas inicia quando o banco estiver feito
+
 =====================================================================================
 
 Instruções para o PROJETO CatalogoProdutosAPI.Tests
@@ -201,7 +202,7 @@ produtos - Permite upload de imagens - Suporta filtros dinâmicos -
 
 Utiliza boas práticas de arquitetura
 
-=========================================================================================================================
+==============================================================================================
 
 DOCUMENTAÇÃO RESUMIDA – PROJETO CatalogoProdutosAPI.Tests
 
@@ -225,7 +226,7 @@ Core InMemory - Testes assíncronos (async/await)
 
 &nbsp; -------------------------
 
-CatalogoProdutosAPI.Tests │ └── ProdutoRepositoryTests.cs
+CatalogoProdutosAPI.Tests │ ── ProdutoRepositoryTests.cs
 
 &nbsp; ------------------------------
 
