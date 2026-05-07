@@ -38,11 +38,7 @@ Instruções para o PROJETO CatalogoProdutosAPI.Tests
 
 DOCUMENTAÇÃO RESUMIDA – ESTRUTURA DO PROJETO CatalogoProdutosAPI
 
-&nbsp; ----------------
-
 &nbsp; 1. VISÃO GERAL
-
-&nbsp; ----------------
 
 O projeto CatalogoProdutosAPI é uma API REST desenvolvida em ASP.NET
 
@@ -56,16 +52,11 @@ CatalogoProdutosAPI │ Controllers ── Data ── Dtos ── Models ──
 
 Repositories
 
-&nbsp; -----------
-
 &nbsp; 2. MODELS
-
-&nbsp; -----------
 
 Produto.cs
 
 Representa a entidade principal do sistema.
-
 
 
 Propriedades: - Id → Identificador único - Nome → Nome do produto -
@@ -78,11 +69,7 @@ criação
 
 Função: Representa a tabela Produtos no banco de dados.
 
-&nbsp; -----------------------------
-
 &nbsp; 3. DATA (Contexto do Banco)
-
-&nbsp; -----------------------------
 
 IDataContext.cs
 
@@ -98,11 +85,7 @@ Responsável por: - Configuração do banco - Mapeamento das entidades -
 
 Persistência de dados
 
-&nbsp; ---------------------------------
-
 &nbsp; 4. DTOS (Data Transfer Objects)
-
-&nbsp; ---------------------------------
 
 CriarProdutoDto.cs Utilizado no POST (criação). Contém: - Nome -
 
@@ -116,11 +99,7 @@ Categoria - Preço - Status - ImagemUrl
 
 Evita expor diretamente o Model.
 
-&nbsp; -----------------
-
 &nbsp; 5. REPOSITORIES
-
-&nbsp; -----------------
 
 IProdutoRepository.cs
 
@@ -138,11 +117,7 @@ Status \* Presença de imagem - Atualização - Exclusão
 
 Centraliza toda lógica de acesso ao banco.
 
-&nbsp; ----------------
-
 &nbsp; 6. CONTROLLERS
-
-&nbsp; ----------------
 
 ProdutoController.cs
 
@@ -162,11 +137,7 @@ Upload de imagem: - Recebe IFormFile - Salva arquivo na pasta /Uploads -
 
 Gera nome único com Guid - Armazena o caminho no banco
 
-&nbsp; -----------------------
-
 &nbsp; 7. FLUXO DA APLICAÇÃO
-
-&nbsp; -----------------------
 
 Cliente → Controller → Repository → DataContext → Banco de Dados
 
@@ -180,11 +151,7 @@ Cliente → Controller → Repository → DataContext → Banco de Dados
 
 5\.  Resposta retorna ao cliente
 
-&nbsp; -----------------------
-
 &nbsp; 8. PADRÕES UTILIZADOS
-
-&nbsp; -----------------------
 
 \-   API REST
 
@@ -198,11 +165,7 @@ Cliente → Controller → Repository → DataContext → Banco de Dados
 
 \-   Upload de arquivos
 
-&nbsp; -----------------
-
 &nbsp; 9. RESUMO FINAL
-
-&nbsp; -----------------
 
 O projeto é uma API REST organizada e escalável que: - Gerencia
 
@@ -214,11 +177,7 @@ Utiliza boas práticas de arquitetura
 
 DOCUMENTAÇÃO RESUMIDA – PROJETO CatalogoProdutosAPI.Tests
 
-&nbsp; ----------------
-
 &nbsp; 1. VISÃO GERAL
-
-&nbsp; ----------------
 
 O projeto CatalogoProdutosAPI.Tests é responsável por testar
 
@@ -228,29 +187,17 @@ Tecnologias utilizadas: - xUnit (framework de testes) - Entity Framework
 
 Core InMemory - Testes assíncronos (async/await)
 
-&nbsp; -------------------------
-
 &nbsp; 2. ESTRUTURA DO PROJETO
-
-&nbsp; -------------------------
 
 CatalogoProdutosAPI.Tests │ ── ProdutoRepositoryTests.cs
 
-&nbsp; ------------------------------
-
 &nbsp; 3. ProdutoRepositoryTests.cs
-
-&nbsp; ------------------------------
 
 Classe principal: public class ProdutoRepositoryTests
 
-Responsável por testar a classe ProdutoRepository.
-
-&nbsp; -------------------------------------
+Responsável por testar a classe ProdutoRepository
 
 &nbsp; 4. CONFIGURAÇÃO DO BANCO EM MEMÓRIA
-
-&nbsp; -------------------------------------
 
 Método auxiliar:
 
@@ -264,11 +211,7 @@ DataContext
 
 Isso permite que os testes rodem sem depender de um banco real.
 
-&nbsp; -----------------------
-
 &nbsp; 5. TESTE IMPLEMENTADO
-
-&nbsp; -----------------------
 
 Teste: Deve\_Cadastrar\_Produto()
 
@@ -294,21 +237,13 @@ Estrutura utilizada: AAA (Arrange, Act, Assert)
 
 &nbsp;   Assert.Single(produtos)
 
-&nbsp; -------------------
-
 &nbsp; 6. FLUXO DO TESTE
-
-&nbsp; -------------------
 
 Criar contexto em memória ↓ Criar repositório ↓ Cadastrar produto ↓
 
 Buscar produtos ↓ Validar resultado
 
-&nbsp; ----------------------------------
-
 &nbsp; 7. OBJETIVO DO PROJETO DE TESTES
-
-&nbsp; ----------------------------------
 
 \-   Garantir que a camada Repository funciona corretamente
 
@@ -320,11 +255,7 @@ Buscar produtos ↓ Validar resultado
 
 \-   Permitir integração contínua (CI/CD)
 
-&nbsp; ---------------
-
 &nbsp; 8. BENEFÍCIOS
-
-&nbsp; ---------------
 
 \-   Testes rápidos
 
@@ -336,11 +267,7 @@ Buscar produtos ↓ Validar resultado
 
 \-   Melhor qualidade da aplicação
 
-&nbsp; --------------
-
 &nbsp; RESUMO FINAL
-
-&nbsp; --------------
 
 O projeto CatalogoProdutosAPI.Tests valida o funcionamento da camada de
 
